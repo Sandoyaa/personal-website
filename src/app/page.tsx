@@ -67,7 +67,7 @@ export default function Home() {
             className="w-full justify-center gap-2 transition-transform hover:scale-[1.02]"
             asChild
           >
-            <a href="/my-website/resume.pdf" target="_blank" rel="noopener noreferrer">
+            <a href="/personal-website/resume.pdf" target="_blank" rel="noopener noreferrer">
               <FileText className="h-5 w-5" />
               Resume
             </a>
