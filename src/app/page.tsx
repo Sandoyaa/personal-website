@@ -52,8 +52,8 @@ export default function Home() {
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight">Serhii Surzhykov</h1>
             <p className="text-muted-foreground">
-              Frontend developer with experience in building production web and mobile applications using React and
-              TypeScript.
+              iOS Developer building polished SwiftUI apps — 3 shipped on the App Store, with a frontend background
+              (React, TypeScript)
             </p>
           </div>
         </div>
