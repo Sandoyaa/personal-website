@@ -5,12 +5,18 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Check, FileText, Github, Linkedin, Mail, Send } from 'lucide-react';
+import Image from 'next/image';
 import { useState } from 'react';
 import avatarImg from '../../public/avatar.png';
+import moneyTrackerBlack from '../../public/moneytracker-black.png';
+import moneyTrackerWhite from '../../public/moneytracker-white.png';
+import ratesBlack from '../../public/rates-black.png';
+import ratesWhite from '../../public/rates-white.png';
+import timefeelImg from '../../public/timefeel.png';
 
 const email = 'sergeysurzhikov2@gmail.com';
 
-const links = [
+const socialLinks = [
   {
     label: 'GitHub',
     href: 'https://github.com/Sandoyaa',
@@ -25,6 +31,30 @@ const links = [
     label: 'Telegram',
     href: 'https://t.me/sandoya',
     icon: Send
+  }
+];
+
+const apps = [
+  {
+    name: 'Money Tracker',
+    description: 'Budget & expenses app',
+    href: 'https://apps.apple.com/us/app/money-tracker-budget-app/id6761251964',
+    iconLight: moneyTrackerBlack,
+    iconDark: moneyTrackerWhite
+  },
+  {
+    name: 'Currencies Converter',
+    description: 'Live exchange rates',
+    href: 'https://apps.apple.com/us/app/currencies-rates-converter/id6761039204',
+    iconLight: ratesBlack,
+    iconDark: ratesWhite
+  },
+  {
+    name: 'TimeFeel',
+    description: 'Countdown & progress',
+    href: 'https://apps.apple.com/us/app/countdown-progress-timefeel/id6760222007',
+    iconLight: timefeelImg,
+    iconDark: timefeelImg
   }
 ];
 
@@ -51,15 +81,45 @@ export default function Home() {
 
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight">Serhii Surzhykov</h1>
-            <p className="text-muted-foreground">
-              iOS Developer building polished SwiftUI apps — 3 shipped on the App Store
-            </p>
+            <p className="text-muted-foreground">iOS Developer • Swift & SwiftUI</p>
           </div>
         </div>
         <Separator />
-        {/*LINKS*/}
+
+        <section className="grid gap-3 sm:grid-cols-3">
+          {apps.map((app) => (
+            <a
+              key={app.name}
+              href={app.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col items-center gap-3 rounded-xl border bg-card p-4 text-center transition-all hover:scale-[1.03] hover:shadow-md"
+            >
+              <Image
+                src={app.iconLight}
+                alt={`${app.name} icon`}
+                width={64}
+                height={64}
+                className="h-16 w-16 rounded-2xl p-0.5 shadow-sm dark:hidden"
+              />
+              <Image
+                src={app.iconDark}
+                alt={`${app.name} icon`}
+                width={64}
+                height={64}
+                className="hidden h-16 w-16 rounded-2xl bg-secondary p-0.5 shadow-sm dark:block"
+              />
+              <div className="space-y-0.5">
+                <p className="text-sm font-semibold">{app.name}</p>
+                <p className="text-xs text-muted-foreground">{app.description}</p>
+              </div>
+            </a>
+          ))}
+        </section>
+
+        <Separator />
+
         <nav className="flex flex-col gap-3">
-          {/*RESUME*/}
           <Button
             variant="outline"
             size="lg"
@@ -71,7 +131,16 @@ export default function Home() {
               Resume
             </a>
           </Button>
-          {links.map((link) => (
+          <Button
+            variant="outline"
+            size="lg"
+            className="w-full justify-center gap-2 transition-transform hover:scale-[1.02]"
+            onClick={handleClick}
+          >
+            {copied ? <Check className="h-5 w-5" /> : <Mail className="h-5 w-5" />}
+            {copied ? 'Copied!' : 'Email'}
+          </Button>
+          {socialLinks.map((link) => (
             <Button
               key={link.label}
               variant="outline"
@@ -85,16 +154,6 @@ export default function Home() {
               </a>
             </Button>
           ))}
-          {/*EMAIL*/}
-          <Button
-            variant="outline"
-            size="lg"
-            className="w-full justify-center gap-2 transition-transform hover:scale-[1.02]"
-            onClick={handleClick}
-          >
-            {copied ? <Check className="h-5 w-5" /> : <Mail className="h-5 w-5" />}
-            {copied ? 'Copied!' : 'Email'}
-          </Button>
         </nav>
       </main>
     </div>
