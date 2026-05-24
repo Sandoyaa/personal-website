@@ -43,7 +43,7 @@ const apps = [
     iconDark: moneyTrackerWhite
   },
   {
-    name: 'Currency Converter',
+    name: 'Currency & Rates Converter',
     description: 'Live exchange rates',
     href: 'https://apps.apple.com/us/app/currencies-rates-converter/id6761039204',
     iconLight: ratesBlack,
