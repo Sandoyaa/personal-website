@@ -3,11 +3,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { AppBackdrop } from '@/components/AppBackdrop';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Check, FileText, Github, Linkedin, Mail, Send } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import avatarImg from '../../public/avatar.png';
+import bloodSugarImg from '../../public/bloodsugar.png';
+import bloodSugarDark from '../../public/bloodsugar-dark.png';
 import moneyTrackerBlack from '../../public/moneytracker-black.png';
 import moneyTrackerWhite from '../../public/moneytracker-white.png';
 import ratesBlack from '../../public/rates-black.png';
@@ -15,6 +18,7 @@ import ratesWhite from '../../public/rates-white.png';
 import timefeelImg from '../../public/timefeel.png';
 
 const email = 'sergeysurzhikov2@gmail.com';
+const cvHref = '/personal-website/cv.pdf';
 
 const socialLinks = [
   {
@@ -38,25 +42,36 @@ const apps = [
   {
     name: 'Money Tracker',
     description: 'Budget & expenses app',
-    href: 'https://apps.apple.com/us/app/money-tracker-budget-app/id6761251964',
+    href: 'https://apps.apple.com/us/app/money-tracker-budget-app/id6761251964?pt=128631287&ct=website&mt=8',
     iconLight: moneyTrackerBlack,
-    iconDark: moneyTrackerWhite
+    iconDark: moneyTrackerWhite,
+    backdrop: 'stars'
   },
   {
     name: 'Rates',
     description: 'Live exchange rates',
-    href: 'https://apps.apple.com/us/app/currencies-rates-converter/id6761039204',
+    href: 'https://apps.apple.com/us/app/currencies-rates-converter/id6761039204?pt=128631287&ct=website&mt=8',
     iconLight: ratesBlack,
-    iconDark: ratesWhite
+    iconDark: ratesWhite,
+    backdrop: 'glyphs'
   },
   {
     name: 'TimeFeel',
     description: 'Countdown & progress',
-    href: 'https://apps.apple.com/us/app/countdown-progress-timefeel/id6760222007',
+    href: 'https://apps.apple.com/us/app/countdown-progress-timefeel/id6760222007?pt=128631287&ct=website&mt=8',
     iconLight: timefeelImg,
-    iconDark: timefeelImg
+    iconDark: timefeelImg,
+    backdrop: 'orbs'
+  },
+  {
+    name: 'Blood Sugar',
+    description: 'Glucose & carbs log',
+    href: 'https://apps.apple.com/us/app/blood-sugar-glucose-monitor/id6809168539?pt=128631287&ct=website&mt=8',
+    iconLight: bloodSugarImg,
+    iconDark: bloodSugarDark,
+    backdrop: 'wave'
   }
-];
+] as const;
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
@@ -86,30 +101,36 @@ export default function Home() {
         </div>
         <Separator />
 
-        <section className="grid gap-3 sm:grid-cols-3">
+        <section className="grid gap-3 sm:grid-cols-2">
           {apps.map((app) => (
             <a
               key={app.name}
               href={app.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center gap-3 rounded-xl border bg-card p-4 text-center transition-all hover:scale-[1.03] hover:shadow-md"
+              className="group relative isolate flex flex-col items-center gap-3 overflow-hidden rounded-xl border bg-card p-4 text-center transition-all hover:scale-[1.03] hover:shadow-md"
             >
+              <AppBackdrop kind={app.backdrop} />
+              {/* The text sits on moving artwork, so it gets its own floor — as in the apps' cards.
+                  The sea is left bare: it is the paywall's own backdrop, already lit for text. */}
+              {app.backdrop !== 'wave' && (
+                <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-card/20 to-card/60" />
+              )}
               <Image
                 src={app.iconLight}
                 alt={`${app.name} icon`}
                 width={64}
                 height={64}
-                className="h-16 w-16 rounded-2xl p-0.5 shadow-sm dark:hidden"
+                className="relative h-16 w-16 rounded-2xl bg-white p-0.5 shadow-sm dark:hidden"
               />
               <Image
                 src={app.iconDark}
                 alt={`${app.name} icon`}
                 width={64}
                 height={64}
-                className="hidden h-16 w-16 rounded-2xl bg-secondary p-0.5 shadow-sm dark:block"
+                className="relative hidden h-16 w-16 rounded-2xl bg-secondary p-0.5 shadow-sm dark:block"
               />
-              <div className="space-y-0.5">
+              <div className="relative space-y-0.5">
                 <p className="text-sm font-semibold">{app.name}</p>
                 <p className="text-xs text-muted-foreground">{app.description}</p>
               </div>
@@ -119,41 +140,31 @@ export default function Home() {
 
         <Separator />
 
-        <nav className="flex flex-col gap-3">
-          <Button
-            variant="outline"
-            size="lg"
-            className="w-full justify-center gap-2 transition-transform hover:scale-[1.02]"
-            asChild
-          >
-            <a href="/personal-website/resume.pdf" target="_blank" rel="noopener noreferrer">
+        <nav className="space-y-3">
+          <Button size="lg" className="w-full justify-center gap-2 transition-transform hover:scale-[1.02]" asChild>
+            <a href={cvHref} target="_blank" rel="noopener noreferrer">
               <FileText className="h-5 w-5" />
-              Resume
+              CV
             </a>
           </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="w-full justify-center gap-2 transition-transform hover:scale-[1.02]"
-            onClick={handleClick}
-          >
-            {copied ? <Check className="h-5 w-5" /> : <Mail className="h-5 w-5" />}
-            {copied ? 'Copied!' : 'Email'}
-          </Button>
-          {socialLinks.map((link) => (
-            <Button
-              key={link.label}
-              variant="outline"
-              size="lg"
-              className="w-full justify-center gap-2 transition-transform hover:scale-[1.02]"
-              asChild
-            >
-              <a href={link.href} target="_blank" rel="noopener noreferrer">
+          <div className="grid grid-cols-4 gap-3">
+            <button type="button" onClick={handleClick} className="flex flex-col items-center gap-2 rounded-xl border bg-card px-2 py-4 text-xs font-medium transition-all hover:scale-[1.03] hover:shadow-md cursor-pointer">
+              {copied ? <Check className="h-5 w-5" /> : <Mail className="h-5 w-5" />}
+              {copied ? 'Copied!' : 'Email'}
+            </button>
+            {socialLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-2 rounded-xl border bg-card px-2 py-4 text-xs font-medium transition-all hover:scale-[1.03] hover:shadow-md"
+              >
                 <link.icon className="h-5 w-5" />
                 {link.label}
               </a>
-            </Button>
-          ))}
+            ))}
+          </div>
         </nav>
       </main>
     </div>

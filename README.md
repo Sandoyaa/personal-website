@@ -1,14 +1,14 @@
 # Personal Website — Serhii Surzhykov
 
 A personal link-in-bio style website built with Next.js. It serves as a single-page hub with my bio, social links,
-contact info, and resume.
+contact info, and CV.
 
 ## What's on the page
 
 - Avatar and short bio
 - Links to social media
 - Email contact button
-- Downloadable resume (PDF)
+- Downloadable CV (PDF)
 - Dark / light theme toggle
 
 ## Tech stack
