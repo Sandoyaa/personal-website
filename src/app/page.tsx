@@ -1,6 +1,5 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { AppBackdrop } from '@/components/AppBackdrop';
@@ -8,7 +7,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { Check, FileText, Github, Linkedin, Mail, Send } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
-import avatarImg from '../../public/avatar.png';
+import avatarImg from '../../public/avatar.jpg';
 import bloodSugarImg from '../../public/bloodsugar.png';
 import bloodSugarDark from '../../public/bloodsugar-dark.png';
 import moneyTrackerBlack from '../../public/moneytracker-black.png';
@@ -89,10 +88,14 @@ export default function Home() {
       </div>
       <main className="w-full max-w-lg animate-fade-in space-y-8 text-center">
         <div className="flex flex-col items-center gap-4">
-          <Avatar className="h-48 w-48">
-            <AvatarImage src={avatarImg.src} />
-            <AvatarFallback className="text-2xl">SS</AvatarFallback>
-          </Avatar>
+          <Image
+            src={avatarImg}
+            alt="Serhii Surzhykov"
+            width={192}
+            height={192}
+            priority
+            className="h-48 w-48 rounded-full object-cover"
+          />
 
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight">Serhii Surzhykov</h1>
